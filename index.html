@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>探索星辰 · 个人空间</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a1a;
+    --surface: rgba(255,255,255,0.04);
+    --text: #e0e0f0;
+    --muted: #8888aa;
+    --accent: #7c5cfc;
+    --accent2: #38bdf8;
+    --gradient: linear-gradient(135deg, #7c5cfc, #38bdf8, #34d399);
+  }
+
+  body {
+    font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* --- 星空背景 --- */
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--dur) ease-in-out infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.8); }
+  }
+
+  /* --- 流星 --- */
+  .shooting {
+    position: fixed;
+    width: 120px; height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
+    border-radius: 1px;
+    animation: shoot var(--sdur) linear infinite;
+    animation-delay: var(--sdelay);
+    opacity: 0;
+    pointer-events: none; z-index: 0;
+  }
+  @keyframes shoot {
+    0% { opacity: 0; transform: translate(0, 0) rotate(-30deg); }
+    5% { opacity: 1; }
+    15% { opacity: 0; transform: translate(-600px, 300px) rotate(-30deg); }
+    100% { opacity: 0; transform: translate(-600px, 300px) rotate(-30deg); }
+  }
+
+  /* --- 主容器 --- */
+  .container {
+    position: relative; z-index: 1;
+    max-width: 960px; margin: 0 auto; padding: 24px;
+  }
+
+  /* --- 导航 --- */
+  nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 0;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .logo {
+    font-size: 1.5rem; font-weight: 700;
+    background: var(--gradient); -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 0.95rem;
+    transition: color 0.3s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 2px; background: var(--accent);
+    border-radius: 1px; transition: width 0.3s;
+  }
+  .nav-links a:hover { color: #fff; }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* --- Hero --- */
+  .hero {
+    text-align: center; padding: 100px 0 80px;
+  }
+  .badge {
+    display: inline-block; padding: 6px 20px;
+    border: 1px solid rgba(124,92,252,0.4);
+    border-radius: 100px; font-size: 0.85rem;
+    color: var(--accent2); margin-bottom: 28px;
+    backdrop-filter: blur(8px);
+    background: rgba(56,189,248,0.06);
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700;
+    line-height: 1.25; margin-bottom: 20px;
+    background: var(--gradient); -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero p {
+    font-size: 1.15rem; color: var(--muted);
+    max-width: 520px; margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+
+  /* --- 按钮 --- */
+  .btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 32px; border-radius: 12px;
+    font-size: 1rem; font-weight: 500; cursor: pointer;
+    text-decoration: none; border: none;
+    transition: transform 0.2s, box-shadow 0.3s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    box-shadow: 0 4px 24px rgba(124,92,252,0.35);
+  }
+  .btn-primary:hover { box-shadow: 0 8px 36px rgba(124,92,252,0.5); }
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.04); }
+
+  /* --- 卡片网格 --- */
+  .section-title {
+    font-size: 1.6rem; font-weight: 600; text-align: center;
+    margin-bottom: 48px;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px; margin-bottom: 80px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px; padding: 36px 28px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at var(--mx) var(--my), rgba(124,92,252,0.08), transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .card:hover::before { opacity: 1; }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(124,92,252,0.25);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+  .card-icon {
+    width: 48px; height: 48px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 20px;
+    background: linear-gradient(135deg, rgba(124,92,252,0.2), rgba(56,189,248,0.1));
+  }
+  .card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+
+  /* --- 页脚 --- */
+  footer {
+    text-align: center; padding: 40px 0;
+    color: var(--muted); font-size: 0.85rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  footer span { color: var(--accent2); }
+
+  /* --- 响应式 --- */
+  @media (max-width: 640px) {
+    .nav-links { gap: 18px; }
+    .hero { padding: 60px 0 40px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 星空背景 -->
+<div class="stars" id="stars"></div>
+
+<!-- 流星 -->
+<div class="shooting" style="top:15%; left:80%; --sdur:4s; --sdelay:0s;"></div>
+<div class="shooting" style="top:30%; left:60%; --sdur:5s; --sdelay:3s;"></div>
+<div class="shooting" style="top:10%; left:90%; --sdur:6s; --sdelay:7s;"></div>
+
+<div class="container">
+  <!-- 导航 -->
+  <nav>
+    <div class="logo">✦ StarSpace</div>
+    <ul class="nav-links">
+      <li><a href="#">首页</a></li>
+      <li><a href="#">作品</a></li>
+      <li><a href="#">关于</a></li>
+      <li><a href="#">联系</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="badge">🚀 欢迎来到我的空间</div>
+    <h1>探索无限可能<br>创造美好体验</h1>
+    <p>
+      用代码描绘世界，用设计传递温度。
+      专注于打造现代、优雅的数字产品体验。
+    </p>
+    <div class="btn-group">
+      <a class="btn btn-primary" href="#">🌟 开始探索</a>
+      <a class="btn btn-ghost" href="#">了解更多 →</a>
+    </div>
+  </section>
+
+  <!-- 特色卡片 -->
+  <h2 class="section-title">核心能力</h2>
+  <div class="card-grid">
+    <div class="card" onmousemove="moveGlow(event, this)">
+      <div class="card-icon">🎨</div>
+      <h3>界面设计</h3>
+      <p>追求像素级完美的视觉设计，让每一个界面都成为艺术品。</p>
+    </div>
+    <div class="card" onmousemove="moveGlow(event, this)">
+      <div class="card-icon">⚡</div>
+      <h3>高性能开发</h3>
+      <p>极致优化的代码架构，确保应用如丝般顺滑运行。</p>
+    </div>
+    <div class="card" onmousemove="moveGlow(event, this)">
+      <div class="card-icon">🔮</div>
+      <h3>交互体验</h3>
+      <p>精心打磨每一个动效细节，让交互变得自然而愉悦。</p>
+    </div>
+    <div class="card" onmousemove="moveGlow(event, this)">
+      <div class="card-icon">🌐</div>
+      <h3>全栈工程</h3>
+      <p>从前端到后端，从数据到部署，一站式技术解决方案。</p>
+    </div>
+    <div class="card" onmousemove="moveGlow(event, this)">
+      <div class="card-icon">📱</div>
+      <h3>响应式适配</h3>
+      <p>完美适配各种屏幕尺寸，手机、平板、桌面端全覆盖。</p>
+    </div>
+    <div class="card" onmousemove="moveGlow(event, this)">
+      <div class="card-icon">🛡️</div>
+      <h3>安全可靠</h3>
+      <p>严格的安全标准与充分的测试覆盖，放心交付每一个项目。</p>
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <footer>
+    <p>Made with <span>♥</span> · &copy; 2026 StarSpace</p>
+  </footer>
+</div>
+
+<script>
+  // 生成星空
+  const starsContainer = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    const size = Math.random() * 2.5 + 1;
+    star.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random() * 100}%;
+      left:${Math.random() * 100}%;
+      --dur:${Math.random() * 3 + 2}s;
+      --delay:${Math.random() * 5}s;
+    `;
+    starsContainer.appendChild(star);
+  }
+
+  // 卡片鼠标光晕跟踪
+  function moveGlow(e, card) {
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    card.style.setProperty('--mx', x + '%');
+    card.style.setProperty('--my', y + '%');
+  }
+
+  // 滚动渐显动画
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.card').forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    card.style.transitionDelay = i * 0.1 + 's';
+    observer.observe(card);
+  });
+</script>
+</body>
+</html>

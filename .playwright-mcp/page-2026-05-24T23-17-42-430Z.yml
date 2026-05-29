@@ -1,0 +1,55 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]: ✦ StarSpace
+    - list [ref=e5]:
+      - listitem [ref=e6]:
+        - link "首页" [ref=e7] [cursor=pointer]:
+          - /url: "#"
+      - listitem [ref=e8]:
+        - link "作品" [ref=e9] [cursor=pointer]:
+          - /url: "#"
+      - listitem [ref=e10]:
+        - link "关于" [ref=e11] [cursor=pointer]:
+          - /url: "#"
+      - listitem [ref=e12]:
+        - link "联系" [ref=e13] [cursor=pointer]:
+          - /url: "#"
+  - generic [ref=e14]:
+    - generic [ref=e15]: 🚀 欢迎来到我的空间
+    - heading "探索无限可能 创造美好体验" [level=1] [ref=e16]:
+      - text: 探索无限可能
+      - text: 创造美好体验
+    - paragraph [ref=e17]: 用代码描绘世界，用设计传递温度。 专注于打造现代、优雅的数字产品体验。
+    - generic [ref=e18]:
+      - link "🌟 开始探索" [ref=e19] [cursor=pointer]:
+        - /url: "#"
+      - link "了解更多 →" [ref=e20] [cursor=pointer]:
+        - /url: "#"
+  - heading "核心能力" [level=2] [ref=e21]
+  - generic [ref=e22]:
+    - generic [ref=e23]:
+      - generic [ref=e24]: 🎨
+      - heading "界面设计" [level=3] [ref=e25]
+      - paragraph [ref=e26]: 追求像素级完美的视觉设计，让每一个界面都成为艺术品。
+    - generic [ref=e27]:
+      - generic [ref=e28]: ⚡
+      - heading "高性能开发" [level=3] [ref=e29]
+      - paragraph [ref=e30]: 极致优化的代码架构，确保应用如丝般顺滑运行。
+    - generic [ref=e31]:
+      - generic [ref=e32]: 🔮
+      - heading "交互体验" [level=3] [ref=e33]
+      - paragraph [ref=e34]: 精心打磨每一个动效细节，让交互变得自然而愉悦。
+    - generic [ref=e35]:
+      - generic [ref=e36]: 🌐
+      - heading "全栈工程" [level=3] [ref=e37]
+      - paragraph [ref=e38]: 从前端到后端，从数据到部署，一站式技术解决方案。
+    - generic [ref=e39]:
+      - generic [ref=e40]: 📱
+      - heading "响应式适配" [level=3] [ref=e41]
+      - paragraph [ref=e42]: 完美适配各种屏幕尺寸，手机、平板、桌面端全覆盖。
+    - generic [ref=e43]:
+      - generic [ref=e44]: 🛡️
+      - heading "安全可靠" [level=3] [ref=e45]
+      - paragraph [ref=e46]: 严格的安全标准与充分的测试覆盖，放心交付每一个项目。
+  - contentinfo [ref=e47]:
+    - paragraph [ref=e48]: Made with ♥ · © 2026 StarSpace

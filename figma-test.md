@@ -1,0 +1,1 @@
+https://ww.figma.com/design/NeLK3AoRuwEwDlil0b20oh/key-indicators?node-id=22-21&t=R2T3R96mIohz88jI-11
